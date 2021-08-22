@@ -1,5 +1,3 @@
-#Step 5
-
 import random
 from hangman_art import stages
 from hangman_art import logo
