@@ -6,10 +6,8 @@ student_scores = {
   "Neville": 62,
 }
 
-#TODO-1: Create an empty dictionary called student_grades.
 student_grades = {}
 
-#TODO-2: Write your code below to add the grades to student_grades.👇
 for name in student_scores:
   score = student_scores[name]
   if score > 90:
