@@ -13,14 +13,14 @@ def auction():
 
 auction()
 
-bidding_condition = True
-while bidding_condition:
+isBidding = True
+while isBidding:
   more_bidders = input("Are there any other bidders? Type 'yes' or 'no'.\n")
   if more_bidders == "yes":
     clear()
     auction()
   else:
-    bidding_condition = False
+    isBidding = False
 
 highest_bid = 0
 for bidder in bidding_record:
