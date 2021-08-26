@@ -26,7 +26,7 @@ def calculator():
   num1 = float(input("What's the first number?: "))
   for symbol in operations:
     print(symbol)
-  should_continue = True
+  should_continue = True #Flag
   
   while should_continue:
     operation_symbol = input("Pick an operation: ")
@@ -40,6 +40,7 @@ def calculator():
     else:
       should_continue = False
       clear()
+      #Concept of Recursion is being used in here
       calculator()
 
 calculator()
