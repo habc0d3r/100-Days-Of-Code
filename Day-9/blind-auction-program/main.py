@@ -15,8 +15,8 @@ auction()
 
 isBidding = True
 while isBidding:
-  more_bidders = input("Are there any other bidders? Type 'yes' or 'no'.\n")
-  if more_bidders == "yes":
+  more_bidders = input("Are there any other bidders? Type 'y' for yes or 'n' for no.\n")
+  if more_bidders == "y":
     clear()
     auction()
   else:
