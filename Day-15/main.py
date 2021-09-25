@@ -1,47 +1,62 @@
-# from menu import MENU, resources
-
-# Todo: Ask what would user like
-user_choice = input("What would you like? (espresso/latte/cappuccino):")
-# Todo: Ask how many coins in: quarters, dimes, nickels, pennies
-print("Please insert coins.")
-quarters = int(input("How many quarters?: "))
-dimes = int(input("How many dimes?: "))
-nickles = int(input("How many nickles?: "))
-pennies = int(input("How many pennies?: "))
+from menu import MENU, resources, profit
 
 
-# Todo: Convert quarters, dimes, nickels, pennies to dollar
-def convert_currency(q, d, n, p):
-    cents = q*25 + d*10 + n*5 + p*1
-    dollar = cents/100
-    return dollar
+def is_resource_sufficient(order_ingredients):
+    """Returns True when order can be made, False if ingredients are not enough"""
+    for i in order_ingredients:
+        if order_ingredients[i] >= resources[i]:
+            print(f"Sorry there is not enough {i}.")
+            return False
+    return True
 
 
-print(convert_currency(q=quarters, d=dimes, n=nickles, p=pennies))
+def process_money():
+    """Returns the total money calculated from coins inserted """
+    print("Please insert coins.")
+    quarters = int(input("How many quarters?: "))
+    dimes = int(input("How many dimes?: "))
+    nickles = int(input("How many nickles?: "))
+    pennies = int(input("How many pennies?: "))
+    total = quarters*25 + dimes*10 + nickles*5 + pennies*1
+    total = total/100
+    return total
 
 
-# todo: based on user's choice of coffee subtract quantity of resources
-def resource_calc(coffee):
-    # todo: based on users choice access the items used for make the coffee
-    if user_choice == coffee:
-        # subtract from resources
-        pass
+def is_transaction_successful(money_received, coffee_cost):
+    """Return True when the payment is accepted, or False if money
+    is insufficient """
+    if money_received >= coffee_cost:
+        change = round(money_received - coffee_cost, 2)
+        print(f"Here is {round(change, 2)} in change.")
+        global profit
+        profit += coffee_cost
+        return True
+    else:
+        print("Sorry that's not enough money. Money refunded.")
+        return False
 
 
-# Todo: Check resources sufficient?
-# Todo: Process coins
-# todo: based on coffee choice calculate changes and return
-def change():
-    pass
+def make_coffee(coffee_name, order_ingredients):
+    """Deduct the required ingredients from the resources."""
+    for item in order_ingredients:
+        resources[item] -= order_ingredients[item]
+    print(f"Here is your {coffee_name} ☕️. Enjoy!")
 
 
-# Todo: Check transaction successful
-# Todo: Make Coffee
-# Todo: Ask What would user want?
-# Todo: If user enter 'off' turn off the coffee machine
-# Todo: Print report
-# water = resources['water']
-# milk = resources['milk']
-# coffee = resources['coffee']
-# if user_choice == 'report':
-#     print(f"Water: {water}ml\nMilk: {milk}ml\nCoffee: {coffee}g")
+is_machine_on = True
+
+while is_machine_on:
+    user_choice = input("What would you like? (espresso/latte/cappuccino):")
+    if user_choice == "off":
+        is_machine_on = False
+    elif user_choice == "report":
+        print(f"Water: {resources['water']}ml")
+        print(f"Milk: {resources['milk']}ml")
+        print(f"Coffee: {resources['coffee']}g")
+        print(f"Money: ${profit}")
+    else:
+        coffee_choice = MENU[user_choice]
+        if is_resource_sufficient(coffee_choice['ingredients']):
+            payment = process_money()
+            if is_transaction_successful(payment, coffee_choice['cost']):
+                make_coffee(user_choice, coffee_choice['ingredients'])
