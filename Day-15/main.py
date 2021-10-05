@@ -27,7 +27,7 @@ def is_transaction_successful(money_received, coffee_cost):
     is insufficient """
     if money_received >= coffee_cost:
         change = round(money_received - coffee_cost, 2)
-        print(f"Here is {round(change, 2)} in change.")
+        print(f"Here is {change} in change.")
         global profit
         profit += coffee_cost
         return True

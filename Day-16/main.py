@@ -1,6 +1,3 @@
-# import another_module
-# print(another_module.another_variable)
-
 # import turtle
 # timmy = turtle.Turtle()
 # timmy is an object, turtle is the module
